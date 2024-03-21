@@ -2,26 +2,42 @@
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import React, { HTMLAttributes, ReactNode, useState } from "react";
+import React, { HTMLAttributes, ReactNode, forwardRef, useState } from "react";
 import EyeOpenIcon from "../../assets/icons/eyeOpen-icon.svg";
 import EyeClosedIcon from "../../assets/icons/eyeClosed-icon.svg";
+import {
+  FieldValues,
+  UseFormRegister,
+  UseControllerProps,
+  useController,
+  Control,
+} from "react-hook-form";
 
-interface TextInputProps extends HTMLAttributes<HTMLDivElement> {
+interface TextInputProps extends HTMLAttributes<HTMLInputElement> {
   icon?: string;
   placeholder: string;
   className?: string;
   type?: "password" | "default";
+  register?: UseFormRegister<FieldValues>;
+  hookProps:UseControllerProps<Record<string, string>> | any;
 }
 
-export default function TextInput({
-  icon,
-  placeholder,
-  className,
-  type = "default",
-  ...props
-}: TextInputProps) {
+const TextInput = forwardRef(function TextInput(
+  {
+    icon,
+    placeholder,
+    className,
+    type = "default",
+    register,
+    hookProps,
+
+    ...props
+  }: TextInputProps,
+  ref: React.ForwardedRef<HTMLInputElement>
+) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  console.log("classname");
+  const { field, fieldState } = useController(hookProps);
+
   if (type === "password") {
     return (
       <div
@@ -40,9 +56,12 @@ export default function TextInput({
           />
         )}
         <input
+          {...field}
           type={showPassword ? "text" : "password"}
+          autoComplete={placeholder}
           placeholder={placeholder}
           className="outline-none h-full w-full text-sm bg-transparent "
+          // ref={ref}
         />
         <Image
           src={showPassword ? EyeClosedIcon : EyeOpenIcon}
@@ -74,10 +93,14 @@ export default function TextInput({
         )}
       </div>
       <input
+        {...field}
         type="text"
         placeholder={placeholder}
+        autoComplete={placeholder}
         className="outline-none h-full w-full text-sm bg-transparent "
       />
     </div>
   );
-}
+});
+
+export default TextInput;

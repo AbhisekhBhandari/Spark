@@ -1,3 +1,4 @@
+'use client'
 import react from "react";
 import { createTheme } from "@mui/material";
 import { palette } from "./palette";
@@ -6,9 +7,7 @@ import { ThemeProvider as MuiThemeProvider } from "@mui/material";
 const theme = createTheme({
   palette: {
     ...palette,
-    background:{
-      default:'red'
-    }
+
   },
 });
 
