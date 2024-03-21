@@ -5,23 +5,19 @@ import EmailIcon from "@/assets/icons/email-icon.svg";
 import PasswordIcon from "@/assets/icons/password-icon.svg";
 import GoogleIcon from "@/assets/icons/google.svg";
 import Image from "next/image";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-type SignupFormProps = {
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SignupSchemaType, signupSchema } from "@/lib/validation/zod";
 
 function SignupForm() {
   const {
-    register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    getValues,
     control,
-  } = useForm({
+  } = useForm<SignupSchemaType>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -31,7 +27,7 @@ function SignupForm() {
   });
   console.log("values", errors);
 
-  const onSubmitHandler = async (data: FieldValues) => {
+  const onSubmitHandler = async (data: SignupSchemaType) => {
     console.log("helo", data);
 
     await new Promise((res, rej) => setTimeout(res, 1000));
@@ -51,9 +47,6 @@ function SignupForm() {
             hookProps={{
               control,
               name: "email",
-              rules: {
-                required: "Email is required",
-              },
             }}
           />
           {errors.email && (
@@ -69,13 +62,6 @@ function SignupForm() {
             hookProps={{
               control,
               name: "password",
-              rules: {
-                required: "Password is required.",
-                minLength: {
-                  value: 8,
-                  message: "Password must be atleast 8 characters",
-                },
-              },
             }}
           />
           {errors.password && (
@@ -91,11 +77,6 @@ function SignupForm() {
             hookProps={{
               control,
               name: "confirmPassword",
-              rules: {
-                required: "Confirm Password is required.",
-                validate: (value: string) =>
-                  value === getValues("password") || "Passwords must match",
-              },
             }}
           />
           {errors.confirmPassword && (

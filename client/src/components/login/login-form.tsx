@@ -5,25 +5,25 @@ import EmailIcon from "@/assets/icons/email-icon.svg";
 import PasswordIcon from "@/assets/icons/password-icon.svg";
 import GoogleIcon from "@/assets/icons/google.svg";
 import Image from "next/image";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginSchema, LoginSchemaType } from "@/lib/validation/zod";
 
 function LoginForm() {
   const {
-    register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    getValues,
     control,
-  } = useForm({
+  } = useForm<LoginSchemaType>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
-  console.log("values", errors);
 
-  const onSubmitHandler = async (data: FieldValues) => {
+  const onSubmitHandler = async (data: LoginSchemaType) => {
     console.log("helo", data);
 
     await new Promise((res, rej) => setTimeout(res, 1000));
@@ -44,9 +44,9 @@ function LoginForm() {
             hookProps={{
               control,
               name: "email",
-              rules: {
-                required: "Email is required",
-              },
+              //   rules: {
+              //     required: "Email is required",
+              //   },
             }}
           />
           {errors.email && (
@@ -62,13 +62,13 @@ function LoginForm() {
             hookProps={{
               control,
               name: "password",
-              rules: {
-                required: "Password is required.",
-                minLength: {
-                  value: 8,
-                  message: "Password must be atleast 8 characters",
-                },
-              },
+              //   rules: {
+              //     required: "Password is required.",
+              //     minLength: {
+              //       value: 8,
+              //       message: "Password must be atleast 8 characters",
+              //     },
+              //   },
             }}
           />
           {errors.password && (

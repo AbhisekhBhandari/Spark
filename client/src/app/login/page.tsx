@@ -28,7 +28,7 @@ export default function Home() {
         elevation={20}
         sx={{
           width: "90%",
-          height: "85%",
+          height: "89%",
           py: 4,
           display: "flex",
           justifyContent: "center",
@@ -74,7 +74,7 @@ export default function Home() {
               </p>
               <div></div>
             </div>
-            <div className="text-center flex flex-col gap-1 ">
+            <div className="text-center flex flex-col gap-1  ">
               <Typography variant="h5" fontWeight={600}>
                 Welcome Back
               </Typography>
