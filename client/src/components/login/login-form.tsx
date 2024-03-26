@@ -8,6 +8,8 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema, LoginSchemaType } from "@/lib/validation/zod";
+import { useRouter } from "next/navigation";
+
 
 function LoginForm() {
   const {
@@ -22,12 +24,17 @@ function LoginForm() {
       password: "",
     },
   });
+  
+  const navigate = useRouter()
 
   const onSubmitHandler = async (data: LoginSchemaType) => {
     console.log("helo", data);
 
     await new Promise((res, rej) => setTimeout(res, 1000));
-    reset();
+    console.log('hello');
+    
+    navigate.replace('/')
+    // reset();
   };
 
   return (
