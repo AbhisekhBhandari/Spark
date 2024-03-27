@@ -17,7 +17,7 @@ const SvgColor = forwardRef<HTMLSpanElement, SvgColorProps>(({ src, sx, ...other
       width: 30,
       height: 24,
       display: 'inline-block',
-      bgcolor: 'red',
+      bgcolor: 'current',
       mask: `url(${src}) no-repeat center / contain`,
       WebkitMask: `url(${src}) no-repeat center / contain`,
       ...sx,
@@ -27,3 +27,10 @@ const SvgColor = forwardRef<HTMLSpanElement, SvgColorProps>(({ src, sx, ...other
 ));
 
 export default SvgColor;
+
+
+
+// export function SvgColor(svg) {
+  
+
+// }

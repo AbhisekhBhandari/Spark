@@ -3,18 +3,19 @@ import React from "react";
 import PostHeader from "./post-header";
 import PostContent from "./post-content";
 import PostActivity from "./post-activity";
-
-interface PostProps {
-  image?: string;
-  caption?: string;
-}
-
-function Post({ image, caption }: PostProps) {
+// userId: string;
+// username: string;
+// email: string;
+// followed: boolean;
+// caption?: string;
+// photo?:string;
+// postId:string;
+function Post({ data }: {data:PostType}) {
   return (
-    <div className="border max-w-[750px]  px-3  border-gray-200 w-full min-h-[200px] rounded-lg overflow-clip">
-      <PostHeader />
-      <PostContent image={image} />
-      <PostActivity />
+    <div className="border max-w-[750px]  px-3  border-gray-200 w-full  rounded-lg overflow-clip">
+      <PostHeader userId={data.userId} username={data.username} email={data.email} followed={data.followed} />
+      <PostContent caption={data.caption} photo={data.photo} />
+      <PostActivity liked={data.liked} postId={data.postId} />
     </div>
   );
 }
