@@ -1,20 +1,44 @@
+'use client'
+
 import React from "react";
 import { NAV_DATA } from "./config-navigation";
-import { Box } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 import Link from "next/link";
-function NavList() {
-  return (
-    <div className=" h-full w-11/12 py-10 flex flex-col  gap-5">
-      {NAV_DATA.map((item, index) => (
-        <Link href={item.path} className="w-full flex gap-3 rounded-md border  border-gray-200 px-2   py-3 text-xl items-center">
-          <Box component="span" height={30} width={30}>
-            {item.icons}
-          </Box>
-          {/* <Image src={HomeIcon} height={20} width={20} alt='home' className=' text-red-900 '/> */}
+import Image from "next/image";
+import Option from "@/assets/icons/post/Option.svg";
+import { LightTooltip } from "@/theme/components/styled/tooltip";
+import { useResponsive } from "@/hooks/useResponsive";
 
-          <p className="hidden sm:flex">{item.title}</p>
-        </Link>
+function NavList() {
+
+  return (
+    <div
+      className="
+    w-full h-full flex justify-around items-center px-4 gap-2
+    1050:flex-col 1050:w-11/12 1050:items-start 1050:mx-4 1050:justify-start
+   1050:h-full 1050:py-8    1050:gap-5 1050:px-0
+   "
+    >
+      {NAV_DATA.map((item, index) => (
+        <LightTooltip title={item.title} arrow placement={useResponsive(1050) ? 'right' :'top' } key={item.title}>
+          <Link
+            href={item.path}
+            className="flex items-center gap-3 justify-center
+          h-full px-5 w-full
+          hover:bg-gray-100
+          
+          1050:px-5 1050:py-3 1050:w-full 1050:rounded-xl 1050:border 1050:justify-normal  1050:h-fit
+          
+          "
+          >
+            {item.icons}
+
+            {/* <Image src={HomeIcon} height={20} width={20} alt='home' className=' text-red-900 '/> */}
+            <p className=" hidden 1050:flex text-xl">{item.title}</p>
+          </Link>
+        </LightTooltip>
       ))}
+      {/* <Image src={Option} alt="demo" height={230} width={30}/> */}
     </div>
   );
 }

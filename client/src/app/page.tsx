@@ -6,7 +6,7 @@ import React from 'react'
 
 function Home() {
   return (
-    <div className='w-full flex'>
+    <div className='w-full  flex gap-4  justify-between  px-1 '>
       <PostFeed/>
       <ProfileSection/>
     </div>

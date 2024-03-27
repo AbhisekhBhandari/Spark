@@ -1,16 +1,22 @@
 import { ReactNode } from "react";
 import SvgColor from "../svg-color";
+import Image from "next/image";
+import Home from "../../assets/icons/nav/Home.svg";
+import Search from "../../assets/icons/nav/Search.svg";
+import Message from "../../assets/icons/nav/Message.svg";
+import Notification from "../../assets/icons/nav/Notification.svg";
+import Watch from "../../assets/icons/nav/Watch.svg";
 
- const icon = (name: string, height = 1, width = 1) => (
-  <SvgColor src={`/assets/icons/nav/${name}.svg`} sx={{ height, width }} />
+const icon = (name: string, height = 40, width = 40) => (
+  <Image src={name} height={height} width={width} alt={name} />
 );
 
 const ICONS = {
-  home: icon("Home"),
-  search: icon('Search'),
-  message:icon("Message"),
-  notification:icon("Notification"),
-  watch: icon("Watch")
+  home: icon(Home),
+  search: icon(Search),
+  message: icon(Message),
+  notification: icon(Notification),
+  watch: icon(Watch),
 };
 
 type NAV_DATA_TYPE = {
