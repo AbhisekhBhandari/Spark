@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import Image from "next/image";
 import React, { HTMLAttributes, ReactNode, forwardRef, useState } from "react";
 import EyeOpenIcon from "../../assets/icons/eyeOpen-icon.svg";
@@ -19,7 +19,8 @@ interface TextInputProps extends HTMLAttributes<HTMLInputElement> {
   className?: string;
   type?: "password" | "default";
   register?: UseFormRegister<FieldValues>;
-  hookProps:UseControllerProps<Record<string, string>> | any;
+  hookProps: UseControllerProps<Record<string, string>> | any;
+  label?: string;
 }
 
 const TextInput = forwardRef(function TextInput(
@@ -30,7 +31,7 @@ const TextInput = forwardRef(function TextInput(
     type = "default",
     register,
     hookProps,
-
+    label,
     ...props
   }: TextInputProps,
   ref: React.ForwardedRef<HTMLInputElement>
@@ -40,44 +41,49 @@ const TextInput = forwardRef(function TextInput(
 
   if (type === "password") {
     return (
-      <div
-        className={cn(
-          "border mt-1  px-3 border-[#6372E5] border-opacity-60  bg-[#6372E5] bg-opacity-5  shadow-md  h-11 flex items-center gap-2 rounded-lg  ",
-          className
-        )}
-      >
-        {icon && (
-          <Image
-            src={icon}
-            alt="icon"
-            width={20}
-            className="border-[#6372E5]"
-            color="#6372E5"
+      <>
+      {label && <label>{label}</label>}
+        <div
+          className={cn(
+            "border mt-1  px-3  border-[#6372E5] border-opacity-60  bg-[#6372E5] bg-opacity-5  shadow-md  h-11 flex items-center gap-2 rounded-lg  ",
+            className
+          )}
+        >
+          {icon && (
+            <Image
+              src={icon}
+              alt="icon"
+              width={20}
+              className="border-[#6372E5]"
+              color="#6372E5"
+            />
+          )}
+          <input
+            {...field}
+            type={showPassword ? "text" : "password"}
+            autoComplete={placeholder}
+            placeholder={placeholder}
+            className="outline-none h-full w-full text-sm bg-transparent "
+            // ref={ref}
           />
-        )}
-        <input
-          {...field}
-          type={showPassword ? "text" : "password"}
-          autoComplete={placeholder}
-          placeholder={placeholder}
-          className="outline-none h-full w-full text-sm bg-transparent "
-          // ref={ref}
-        />
-        <Image
-          src={showPassword ? EyeClosedIcon : EyeOpenIcon}
-          alt="eye"
-          width={20}
-          className="cursor-pointer"
-          onClick={() => setShowPassword((prev) => !prev)}
-        />
-      </div>
+          <Image
+            src={showPassword ? EyeClosedIcon : EyeOpenIcon}
+            alt="eye"
+            width={20}
+            className="cursor-pointer"
+            onClick={() => setShowPassword((prev) => !prev)}
+          />
+        </div>
+      </>
     );
   }
 
   return (
+    <div className="flex flex-col w-full ">
+    {label && <label>{label}</label>}
     <div
       className={cn(
-        "border mt-1  px-3 border-[#6372E5] border-opacity-60  bg-[#6372E5] bg-opacity-5  shadow-md  h-11 flex items-center gap-2 rounded-lg  ",
+        "border mt-1  px-3 w-full border-[#6372E5] border-opacity-60  bg-[#6372E5] bg-opacity-5  shadow-md  h-11 flex items-center gap-2 rounded-lg  ",
         className
       )}
     >
@@ -100,6 +106,8 @@ const TextInput = forwardRef(function TextInput(
         className="outline-none h-full w-full text-sm bg-transparent "
       />
     </div>
+    </div>
+
   );
 });
 

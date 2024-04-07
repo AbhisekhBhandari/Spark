@@ -3,10 +3,13 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { primaryFont } from "@/theme/typography";
 import { ThemeProvider } from "@/theme";
-import Sidebar from "@/components/sidebar";
-import MainLayout from "@/layout";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Providers } from "@/lib/providers/providers";
+import { Snackbar } from "@mui/material";
+import { SnackbarProvider } from "@/contexts/Snackbar";
 
-const inter = Inter({ subsets: ["latin"] });
+
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,9 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={primaryFont.className}>
-        <ThemeProvider>
-          <MainLayout>{children}</MainLayout>
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider>
+              <SnackbarProvider>{children}</SnackbarProvider>
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -9,7 +9,29 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema, LoginSchemaType } from "@/lib/validation/zod";
 import { useRouter } from "next/navigation";
+import { gql } from "graphql-request";
+import { useMutation } from "@tanstack/react-query";
+import { useSnackbar } from "@/contexts/Snackbar";
+import { client } from "@/lib/utils/request";
+import { setStorage } from "@/hooks/use-local-storage";
+import { AuthPayload, User } from "@/gql/graphql";
 
+const Login_Query = gql`
+  mutation Mutation($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        username
+        userId
+        profilePicture
+        password
+        isDataFilled
+        email
+        dateOfBirth
+      }
+    }
+  }
+`;
 
 function LoginForm() {
   const {
@@ -24,23 +46,43 @@ function LoginForm() {
       password: "",
     },
   });
-  
-  const navigate = useRouter()
+  const navigate = useRouter();
+  const { showSnackbar } = useSnackbar();
 
-  const onSubmitHandler = async (data: LoginSchemaType) => {
-    console.log("helo", data);
-
-    await new Promise((res, rej) => setTimeout(res, 1000));
-    console.log('hello');
-    
-    navigate.replace('/')
-    // reset();
-  };
+  const mutation = useMutation({
+    mutationFn: async (data: LoginSchemaType) => {
+      const response = await client.request(Login_Query, {
+        email: data.email,
+        password: data.password,
+      });
+      
+      return response;
+    },
+    onSuccess: (data: any) => {
+      try {
+        console.log("data", data);
+        const userStringify = JSON.stringify(data.login.user);
+        setStorage("user", userStringify);
+        showSnackbar("Logged in Successfully!", "success");
+        navigate.push("/");
+      } catch (err) {}
+    },
+    onError: (error) => {
+      try {
+        console.log("err", error);
+        const temp = JSON.stringify(error);
+      } catch (err) {}
+    },
+  });
 
   return (
     <>
+      {/* {mutation.isError ? (
+        <div>An error occurred: {mutation.error.message}</div>
+      ) : null} */}
+
       <form
-        onSubmit={handleSubmit(onSubmitHandler)}
+        onSubmit={handleSubmit((data) => mutation.mutate(data))}
         className="w-10/12  flex flex-col gap-3"
       >
         <div>

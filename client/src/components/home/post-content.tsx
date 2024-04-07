@@ -6,39 +6,52 @@ interface PostContentProps {
   photo?: string;
 }
 
-function PostContent({ caption = "", photo = "" }: PostContentProps) {
-  return (
-    <>
-      {!photo ? (
-        <div className="px-2 py-2">
-          <ShowMoreText>{caption}</ShowMoreText>
-        </div>
-      ) : (
-        <PostContentWImage image={photo} caption={caption} />
-      )}
-    </>
-  );
-}
-
-export default PostContent;
-
 function PostContentWImage({
   image,
   caption = "",
 }: {
-  image: string;
-  caption?: string;
+  image: string | null;
+  caption: string | null;
 }) {
-  console.log('caption', caption);
+  console.log('i', image);
   
   return (
     <div className="py-2">
-      <div className="mb-3 text-sm border-b">
-        <ShowMoreText>{caption}</ShowMoreText>
-      </div>
-      <div className="h-[400px]">
-        <img src={image} className=" w-full h-full object-contain" />
-      </div>
+      {caption && (
+        <div className="mb-3 text-sm border-b">
+          <ShowMoreText>{caption}</ShowMoreText>
+        </div>
+      )}
+      {image !== "null" && ( 
+        <div className={`h-[400px] ${image !==null ? "flex" : "hidden"}`}>
+          <img src={image} className="w-full h-full object-contain" />
+        </div>
+      )}
     </div>
   );
 }
+
+export default PostContentWImage;
+
+// function PostContentWImage({
+//   image,
+//   caption = "",
+// }: {
+//   image: string | null;
+//   caption: string | null;
+// }) {
+//   return (
+//     <div className="py-2">
+//       {caption && (
+//         <div className="mb-3 text-sm border-b">
+//           <ShowMoreText>{caption}</ShowMoreText>
+//         </div>
+//       )}
+//       {image && (
+//         <div className="h-[400px]">
+//           <img src={image} className=" w-full h-full object-contain" />
+//         </div>
+//       )}
+//     </div>
+//   );
+// }

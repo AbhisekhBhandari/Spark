@@ -10,12 +10,18 @@ import PostActivity from "./post-activity";
 // caption?: string;
 // photo?:string;
 // postId:string;
-function Post({ data }: {data:PostType}) {
+function Post({ data }: { data: PostDataType }) {
+  console.log("data", data);
+
   return (
-    <div className="border max-w-[750px]  px-3  border-gray-200 w-full  rounded-lg overflow-clip">
-      <PostHeader userId={data.userId} username={data.username} email={data.email} followed={data.followed} />
-      <PostContent caption={data.caption} photo={data.photo} />
-      <PostActivity liked={data.liked} postId={data.postId} />
+    <div className="border  px-3  border-gray-200 w-full  rounded-lg overflow-clip">
+      <PostHeader
+        userId={data.user.userId}
+        username={data.user.username}
+        postId={data.postId}
+      />
+      <PostContent caption={data.postCaption} image={data.postImage} />
+      <PostActivity liked={data.isLiked} postId={data.postId} />
     </div>
   );
 }

@@ -2,8 +2,8 @@
 import Image from "next/image";
 import React, { useState } from "react";
 // import StarIcon from "@/assets/icons/post/Star.svg";
-import CommentIcon from "@/assets/icons/post/Comment.svg";
-import ShareIcon from "@/assets/icons/post/Share1.svg";
+import CommentIcon from "@/assets/icons/post-control/Comment.svg";
+import ShareIcon from "@/assets/icons/post-control/Share1.svg";
 import StarIcon from "./Icons/Star";
 import Save from "./Icons/Save";
 import { useRouter } from "next/navigation";

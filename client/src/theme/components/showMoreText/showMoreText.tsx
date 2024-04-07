@@ -7,7 +7,6 @@ function ShowMoreText({ children }: { children: string }) {
     <ShowMoreTextP
       lines={3}
       more="Show More"
-      onClick={() => console.log("clicked")}
     >
       {children}
     </ShowMoreTextP>

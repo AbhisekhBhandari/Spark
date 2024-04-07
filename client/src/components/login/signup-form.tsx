@@ -1,16 +1,43 @@
 import { Button, Divider, Typography } from "@mui/material";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import TextInput from "@/components/login/text-input";
 import EmailIcon from "@/assets/icons/email-icon.svg";
 import PasswordIcon from "@/assets/icons/password-icon.svg";
 import GoogleIcon from "@/assets/icons/google.svg";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupSchemaType, signupSchema } from "@/lib/validation/zod";
+import  { gql } from "graphql-request";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
-function SignupForm() {
+import { graphql } from "@/gql/gql";
+import { AuthPayload, SignupResponse, User } from "@/gql/graphql";
+import { useSnackbar } from "@/contexts/Snackbar";
+import { setStorage } from "@/hooks/use-local-storage";
+import { client } from "@/lib/utils/request";
+// import {} from '@/gql/u'
+
+const Signup_Query = gql`
+  mutation Signup($email: String!, $password: String!) {
+    signup(email: $email, password: $password) {
+      user {
+        email
+        isDataFilled
+        password
+        profilePicture
+        userId
+        username
+      }
+    }
+  }
+`;
+interface SignupFormProps{
+setDetailsFillShow: Dispatch<SetStateAction<boolean>>
+}
+
+function SignupForm({setDetailsFillShow}:SignupFormProps) {
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -23,20 +50,29 @@ function SignupForm() {
       password: "",
       confirmPassword: "",
     },
-    // mode: "onChange",
   });
-  console.log("values", errors);
+  const snackbar = useSnackbar()
+  const navigate = useRouter();
 
-  const onSubmitHandler = async (data: SignupSchemaType) => {
-    console.log("helo", data);
+  const mutation = useMutation({
+    mutationFn: (data: SignupSchemaType): Promise<AuthPayload> => {
+      return client.request(Signup_Query, {
+        email: data.email,
+        password: data.password,
+      });
+    },
+    onSuccess: (data:any) => {
+      console.log("data", data);
+      const userStringify = JSON.stringify(data.signup.user);
+      setStorage("user", userStringify);
+      setDetailsFillShow(true);
+    },
+  });
 
-    await new Promise((res, rej) => setTimeout(res, 1000));
-    reset();
-  };
   return (
     <>
       <form
-        onSubmit={handleSubmit(onSubmitHandler)}
+        onSubmit={handleSubmit((data) => mutation.mutate(data))}
         className="w-10/12  flex flex-col gap-3"
       >
         <div>
@@ -98,6 +134,7 @@ function SignupForm() {
           variant="contained"
           className="bg-[#6372E5] w-full rounded-lg  py-3 text-base font-semibold mx-auto"
           type="submit"
+          disabled={mutation.isPending}
         >
           Sign Up
         </Button>
