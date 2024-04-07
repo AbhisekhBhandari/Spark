@@ -3,6 +3,7 @@ import React from "react";
 import PostHeader from "./post-header";
 import PostContent from "./post-content";
 import PostActivity from "./post-activity";
+import { PostDataType } from "./types";
 // userId: string;
 // username: string;
 // email: string;
@@ -20,7 +21,7 @@ function Post({ data }: { data: PostDataType }) {
         postId={data.postId}
       />
       <PostContent caption={data.postCaption} image={data.postImage} />
-      <PostActivity liked={data.isLiked} postId={data.postId} likeCount= {data.likeCount} />
+      <PostActivity liked={data.isLiked} postId={data.postId} likeCount= {data.likeCount}  likesList={data.likes}/>
     </div>
   );
 }

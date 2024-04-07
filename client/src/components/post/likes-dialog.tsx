@@ -3,6 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import { Avatar } from "@mui/material";
 import StarIcon from "../home/Icons/Star";
 import { useQuery } from "@tanstack/react-query";
+import { client } from "@/lib/utils/request";
 import { Like } from "../home/types";
 
 interface LikesDialogProps {

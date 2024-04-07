@@ -12,25 +12,21 @@ import { client } from "@/lib/utils/request";
 import { GET_POST_QUERY } from "@/lib/query/query";
 
 function PostS({ params }: { params: { id: string } }) {
-
   const { id } = params;
-  const {data} = useQuery({
-    queryKey:['posts', id],
-    queryFn:()=>{
-      console.log('id', id);
-      
-      return client.request(GET_POST_QUERY, {postId:id})
-    }
-  }) 
-  
-
+  const { data } = useQuery({
+    queryKey: ["posts", id],
+    queryFn: () => {
+      return client.request(GET_POST_QUERY, { postId: id });
+    },
+    enabled: !!id,
+  });
 
   if (!data) return <div>Loading</div>;
   return (
     <div className=" my-3 1050:mx-10  flex flex-col items-center gap-2">
-      <Post data={data.getSinglePost}/>
-      <PostReply/>
-      <PostCommentFeed/>
+      <Post data={data.getSinglePost} />
+      <PostReply />
+      <PostCommentFeed />
     </div>
   );
 }

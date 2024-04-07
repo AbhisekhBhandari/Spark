@@ -1,5 +1,12 @@
+import { string } from "zod";
 
-interface PostDataType {
+export interface Like  {
+    username: string,
+    userId:string,
+    profilePicture:string | null
+}
+
+export interface PostDataType {
     isLiked: boolean;
     likeCount: number;
     postCaption: string;
@@ -10,4 +17,5 @@ interface PostDataType {
         userId: string;
         username: string;
     };
+    likes: Like[]
   }

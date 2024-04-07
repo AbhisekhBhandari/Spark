@@ -35,8 +35,9 @@ export interface NexusGenObjects {
   InvalidCredentials: {};
   Like: { // root type
     likeId: string; // String!
-    postId: string; // String!
+    profilePicture?: string | null; // String
     userId: string; // String!
+    username: string; // String!
   }
   Mutation: {};
   NotUniqueEmailError: {};
@@ -80,8 +81,9 @@ export interface NexusGenFieldTypes {
   }
   Like: { // field return type
     likeId: string; // String!
-    postId: string; // String!
+    profilePicture: string | null; // String
     userId: string; // String!
+    username: string; // String!
   }
   Mutation: { // field return type
     createPost: NexusGenRootTypes['Post'] | null; // Post
@@ -98,6 +100,7 @@ export interface NexusGenFieldTypes {
   Post: { // field return type
     isLiked: boolean | null; // Boolean
     likeCount: number | null; // Int
+    likes: Array<NexusGenRootTypes['Like'] | null>; // [Like]!
     postCaption: string | null; // String
     postId: string; // ID!
     postImage: string | null; // String
@@ -129,8 +132,9 @@ export interface NexusGenFieldTypeNames {
   }
   Like: { // field return type name
     likeId: 'String'
-    postId: 'String'
+    profilePicture: 'String'
     userId: 'String'
+    username: 'String'
   }
   Mutation: { // field return type name
     createPost: 'Post'
@@ -147,6 +151,7 @@ export interface NexusGenFieldTypeNames {
   Post: { // field return type name
     isLiked: 'Boolean'
     likeCount: 'Int'
+    likes: 'Like'
     postCaption: 'String'
     postId: 'ID'
     postImage: 'String'

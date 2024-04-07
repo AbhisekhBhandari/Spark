@@ -7,8 +7,9 @@ export const Like = objectType({
   name: "Like",
   definition(t) {
     t.nonNull.string("likeId"),
-      t.nonNull.string("postId"),
-      t.nonNull.string("userId");
+    t.nonNull.string("username"),
+    t.nonNull.string("userId"),
+    t.string("profilePicture")
   },
 });
 
@@ -60,3 +61,19 @@ export const LikeMutations = extendType({
     });
   },
 });
+
+// export const LikeQueries = extendType({
+//   type:'Query',
+//   definition(t) {
+//       t.list.field('getLikes',{
+//         type:'Like',
+//         args:{
+//           postId:nonNull(stringArg())
+//         },
+//         resolve(parent, args, context){
+//           const {postId} = arg
+//         }
+
+//       })
+//   },
+// })

@@ -3,11 +3,19 @@ export const createPostQuery = (
   userId: string,
   postImage: string | null,
   postCaption: string | null
-) =>
-  `INSERT INTO public."Post"("postId", "postImage", "postCaption", "userId") VALUES ('${postId}', '${postImage}', '${postCaption}', '${userId}') RETURNING *;`;
+) => {
+  const sqlPostImage = postImage !== null ? `'${postImage}'` : "NULL";
+  const sqlPostCaption = postCaption !== null ? `'${postCaption}'` : "NULL";
+  return `
+    INSERT INTO public."Post"("postId", "postImage", "postCaption", "userId")
+    VALUES ('${postId}', ${sqlPostImage}, ${sqlPostCaption}, '${userId}')
+    RETURNING *;
+  `;
+};
 
 export const getAllPostsQuery = () => `SELECT * FROM public."Post"`;
-export const getPostByIdQuery = (postID:string) =>`SELECT * FROM public."Post" WHERE "postId" = '${postID}'`
+export const getPostByIdQuery = (postID: string) =>
+  `SELECT * FROM public."Post" WHERE "postId" = '${postID}'`;
 
 export const isLikedQuery = (userId: string, postId: string) => `
 SELECT 
@@ -43,6 +51,14 @@ $$
 export const likeCountQuery = (postId: string) => `
 
 SELECT COUNT("likeId") FROM  public."Likes" where "postId" = '${postId}';`;
+
+export const getLikesInfoQuery = (postId: string) => `
+SELECT "likeId", "username", US."userId", "profilePicture" FROM public."Likes" PL  
+LEFT JOIN public."User" US
+ON PL."userId" = US."userId"
+WHERE "postId" = '${postId}'
+;
+`;
 
 //   `
 //   SELECT UP."postId", UP."postImage", UP."postCaption", UP."userId", COUNT(PL."likeId"),

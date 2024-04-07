@@ -13,12 +13,13 @@ import {
   createPostQuery,
   deletePostQuery,
   getAllPostsQuery,
+  getLikesInfoQuery,
   getPostByIdQuery,
   isLikedQuery,
   likeCountQuery,
 } from "../query/post";
 import { findUserById } from "../query/auth";
-import { error } from "console";
+import { error, log } from "console";
 
 export const Post = objectType({
   name: "Post",
@@ -54,6 +55,18 @@ export const Post = objectType({
         return res[0].count;
       },
     });
+    t.nonNull.list.field('likes',{
+      type:'Like',
+      async resolve(parent,args, context){
+        const {postId} = parent;
+        const query = getLikesInfoQuery(postId);
+        const likes = await execute(query);
+        console.log('lieks', likes);
+        return likes;
+      }
+    })
+    // t.field("likes", {
+    // })
     t.field("user", {
       type: "User",
       async resolve(parent, args, context) {

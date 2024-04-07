@@ -10,16 +10,23 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/utils/request";
 import { POST_DISLIKE_QUERY, POST_LIKE_QUERY } from "@/lib/query/query";
+import LikesDialog from "../post/likes-dialog";
+import { Like } from "@/gql/graphql";
 
 function PostActivity({
   liked,
   postId,
   likeCount,
+  likesList
 }: {
   liked: boolean;
   postId: string;
   likeCount: number;
+  likesList:Like[]
 }) {
+  const [openLikesDialog, setOpenLikesDialog] = useState(false);
+
+  
   const navigate = useRouter();
   const queryClient = useQueryClient();
 
@@ -40,16 +47,23 @@ function PostActivity({
     navigate.push(`/post/${postId}`);
   };
 
+  const handleClickOpen = () => {
+    setOpenLikesDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenLikesDialog(false);
+  };
   return (
     <div className="border-gray-200 flex justify-between py-3 px-2 border-t">
       <div className="flex gap-6 ">
-        <div className="flex items-center gap-">
+        <div className="flex items-center gap-1">
           <StarIcon
             className=" h-8 hover:scale-110 cursor-pointer transition-all duration-75  ease-in-out"
             liked={liked}
             onClick={() => likeMutation.mutate(postId)}
           />
-          <p>{likeCount}</p>
+          <p onClick={handleClickOpen}>{likeCount}</p>
         </div>
 
         {/* <Image src={StarIcon} style={{fill:'red'}} alt="star" height={28} className=" hover:scale-110 cursor-pointer transition-all duration-75  ease-in-out text-red-300" /> */}
@@ -68,6 +82,8 @@ function PostActivity({
         />
       </div>
       <Save className=" h-8 hover:scale-110 cursor-pointer transition-all duration-75  ease-in-out" />
+      <LikesDialog  open={openLikesDialog} handleClose={handleClose} likesList={likesList}/>
+
     </div>
   );
 }

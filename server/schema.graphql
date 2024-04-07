@@ -13,8 +13,9 @@ type InvalidCredentials {
 
 type Like {
   likeId: String!
-  postId: String!
+  profilePicture: String
   userId: String!
+  username: String!
 }
 
 """auth details or errors"""
@@ -37,6 +38,7 @@ type NotUniqueEmailError {
 type Post {
   isLiked: Boolean
   likeCount: Int
+  likes: [Like]!
   postCaption: String
   postId: ID!
   postImage: String
