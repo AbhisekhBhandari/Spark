@@ -11,7 +11,6 @@ import PostActivity from "./post-activity";
 // photo?:string;
 // postId:string;
 function Post({ data }: { data: PostDataType }) {
-  console.log("data", data);
 
   return (
     <div className="border  px-3  border-gray-200 w-full  rounded-lg overflow-clip">

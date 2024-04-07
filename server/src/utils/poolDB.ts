@@ -30,6 +30,7 @@
 
 // export const pool = createdPool.promise();
 
+import { AnyAaaaRecord } from "dns";
 import Pool from "pg-pool";
 
 const config = {
@@ -47,9 +48,9 @@ export async function execute (query:string){
     try{
       const res = await pool.query(query);
       return res.rows;
-    }catch(err){
-      console.log('err occuered in poolDB', err);
-      throw err;
+    }catch(err:AnyAaaaRecord){
+      console.log('err occuered in poolDB', err.message);
+      throw err.message;
     }
 
 

@@ -10,6 +10,9 @@ import React from "react";
 import { StyledMenu } from "@/theme/components/styled/Menu";
 import Image from "next/image";
 import OptionIcon from '@/assets/Post/Option.svg';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { client } from "@/lib/utils/request";
+import { POST_DELETE_QUERY } from "@/lib/query/query";
 
 interface PostMenuProps{
   postId:string
@@ -19,6 +22,7 @@ interface PostMenuProps{
 export default function PostMenu({postId}:PostMenuProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const queryClient = useQueryClient()
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -26,7 +30,15 @@ export default function PostMenu({postId}:PostMenuProps) {
     setAnchorEl(null);
   };
 
-
+  const deleteMutation = useMutation({
+    mutationKey:['deletePost'],
+    mutationFn : async (postId:string)=> {
+      handleClose()
+      return client.request(POST_DELETE_QUERY,{postId})},
+    onSuccess:()=>{
+        queryClient.invalidateQueries({queryKey:['posts']})
+    } 
+  })
 
 
   return (
@@ -54,7 +66,7 @@ export default function PostMenu({postId}:PostMenuProps) {
           <EditIcon />
           Edit
         </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem onClick={()=>deleteMutation.mutate(postId)} disableRipple>
           <FileCopyIcon />
           Delete
         </MenuItem>

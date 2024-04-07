@@ -106,9 +106,11 @@ export const Mutations = extendType({
           if (!userId) throw new Error("Not authenticated");
           const query = deletePostQuery(userId, postId);
           const deletePost = await execute(query);
-          console.log("delete result");
+          console.log("delete result", deletePost);
           return deletePost[0];
         } catch (error) {
+          console.log('sere', error);
+          
           throw error;
         }
       },
