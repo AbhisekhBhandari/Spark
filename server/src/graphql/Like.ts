@@ -1,6 +1,6 @@
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 import { v4 } from "uuid";
-import { onLikeQuery } from "../query/like";
+import { onDislikeQuery, onLikeQuery } from "../query/like";
 import { execute } from "../utils/poolDB";
 
 export const Like = objectType({
@@ -12,9 +12,29 @@ export const Like = objectType({
   },
 });
 
-export const Mutations = extendType({
+export const LikeMutations = extendType({
   type: "Mutation",
   definition(t) {
+    t.field("onDislike", {
+      type: "String",
+      args: {
+        postId: nonNull(stringArg()),
+      },
+      async resolve(parent, args, context) {
+        try {
+          const { postId } = args;
+          const { userId } = context.user;
+          //   generate a like id
+
+          const disLikeQuery = onDislikeQuery(postId,userId)
+          const res = await execute(disLikeQuery);
+          console.log("onDislike", res);
+          return "disliked";
+        } catch (error) {
+          throw error;
+        }
+      },
+    });
     t.field("onLike", {
       type: "String",
       args: {
@@ -26,6 +46,8 @@ export const Mutations = extendType({
           const { userId } = context.user;
           //   generate a like id
           const likeId = v4();
+          console.log('likiee');
+          
 
           const likeQuery = onLikeQuery(likeId, userId, postId);
           const res = await execute(likeQuery);

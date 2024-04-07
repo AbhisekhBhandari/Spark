@@ -69,7 +69,7 @@ export const Post = objectType({
   },
 });
 
-export const Mutations = extendType({
+export const PostMutations = extendType({
   type: "Mutation",
   definition(t) {
     t.field("createPost", {
@@ -118,7 +118,7 @@ export const Mutations = extendType({
   },
 });
 
-export const Queries = extendType({
+export const PostQueries = extendType({
   type: "Query",
   definition(t) {
     t.list.field("getPosts", {

@@ -88,6 +88,8 @@ export interface NexusGenFieldTypes {
     dataFill: NexusGenRootTypes['User'] | null; // User
     deletePost: string | null; // String
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
+    onDislike: string | null; // String
+    onLike: string | null; // String
     signup: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
   }
   NotUniqueEmailError: { // field return type
@@ -134,6 +136,8 @@ export interface NexusGenFieldTypeNames {
     dataFill: 'User'
     deletePost: 'String'
     login: 'AuthPayload'
+    onDislike: 'String'
+    onLike: 'String'
     signup: 'AuthPayload'
   }
   NotUniqueEmailError: { // field return type name
@@ -178,6 +182,12 @@ export interface NexusGenArgTypes {
     login: { // args
       email: string; // String!
       password: string; // String!
+    }
+    onDislike: { // args
+      postId: string; // String!
+    }
+    onLike: { // args
+      postId: string; // String!
     }
     signup: { // args
       email: string; // String!

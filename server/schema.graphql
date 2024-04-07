@@ -25,6 +25,8 @@ type Mutation {
   dataFill(dateOfBirth: String!, username: String!): User
   deletePost(postId: String!): String
   login(email: String!, password: String!): AuthPayload
+  onDislike(postId: String!): String
+  onLike(postId: String!): String
   signup(email: String!, password: String!): AuthPayload
 }
 
