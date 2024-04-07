@@ -15,3 +15,19 @@ export const POST_DISLIKE_QUERY = gql`
     onDislike(postId: $postId)
   }
 `;
+
+export const GET_POST_QUERY = gql`
+  query GetSinglePost($postId: String!) {
+    getSinglePost(postId: $postId) {
+      likeCount
+      postCaption
+      postId
+      postImage
+      user {
+        username
+        email
+      }
+      isLiked
+    }
+  }
+`;

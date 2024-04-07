@@ -13,6 +13,7 @@ import {
   createPostQuery,
   deletePostQuery,
   getAllPostsQuery,
+  getPostByIdQuery,
   isLikedQuery,
   likeCountQuery,
 } from "../query/post";
@@ -109,8 +110,8 @@ export const PostMutations = extendType({
           console.log("delete result", deletePost);
           return deletePost[0];
         } catch (error) {
-          console.log('sere', error);
-          
+          console.log("sere", error);
+
           throw error;
         }
       },
@@ -130,6 +131,27 @@ export const PostQueries = extendType({
           const query = getAllPostsQuery();
           const allPosts = await execute(query);
           return allPosts;
+        } catch (error) {
+          throw error;
+        }
+      },
+    });
+    t.field("getSinglePost", {
+      type: "Post",
+      args: {
+        postId: nonNull(stringArg()),
+      },
+      async resolve(parent, args, context) {
+        try {
+          const { postId } = args;
+          const { userId } = context.user;
+          console.log('postId', postId);
+          
+          if (!userId) throw new Error("Unauthenticated");
+          const query = getPostByIdQuery(postId);
+          const post = await execute(query);
+          console.log("got post ", post);
+          return post[0];
         } catch (error) {
           throw error;
         }

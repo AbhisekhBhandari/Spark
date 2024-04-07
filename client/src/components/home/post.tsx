@@ -20,7 +20,7 @@ function Post({ data }: { data: PostDataType }) {
         postId={data.postId}
       />
       <PostContent caption={data.postCaption} image={data.postImage} />
-      <PostActivity liked={data.isLiked} postId={data.postId} />
+      <PostActivity liked={data.isLiked} postId={data.postId} likeCount= {data.likeCount} />
     </div>
   );
 }

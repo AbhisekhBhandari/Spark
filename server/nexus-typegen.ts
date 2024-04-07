@@ -106,6 +106,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     getPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
+    getSinglePost: NexusGenRootTypes['Post'] | null; // Post
   }
   User: { // field return type
     dateOfBirth: string | null; // String
@@ -154,6 +155,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     getPosts: 'Post'
+    getSinglePost: 'Post'
   }
   User: { // field return type name
     dateOfBirth: 'String'
@@ -192,6 +194,11 @@ export interface NexusGenArgTypes {
     signup: { // args
       email: string; // String!
       password: string; // String!
+    }
+  }
+  Query: {
+    getSinglePost: { // args
+      postId: string; // String!
     }
   }
 }

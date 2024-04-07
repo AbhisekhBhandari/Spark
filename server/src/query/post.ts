@@ -7,6 +7,7 @@ export const createPostQuery = (
   `INSERT INTO public."Post"("postId", "postImage", "postCaption", "userId") VALUES ('${postId}', '${postImage}', '${postCaption}', '${userId}') RETURNING *;`;
 
 export const getAllPostsQuery = () => `SELECT * FROM public."Post"`;
+export const getPostByIdQuery = (postID:string) =>`SELECT * FROM public."Post" WHERE "postId" = '${postID}'`
 
 export const isLikedQuery = (userId: string, postId: string) => `
 SELECT 

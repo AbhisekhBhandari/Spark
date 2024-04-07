@@ -11,7 +11,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/utils/request";
 import { POST_DISLIKE_QUERY, POST_LIKE_QUERY } from "@/lib/query/query";
 
-function PostActivity({ liked, postId }: { liked: boolean; postId: string }) {
+function PostActivity({
+  liked,
+  postId,
+  likeCount,
+}: {
+  liked: boolean;
+  postId: string;
+  likeCount: number;
+}) {
   const navigate = useRouter();
   const queryClient = useQueryClient();
 
@@ -20,7 +28,6 @@ function PostActivity({ liked, postId }: { liked: boolean; postId: string }) {
     mutationFn: (postId: string) => {
       if (!liked) {
         console.log("like");
-
         return client.request(POST_LIKE_QUERY, { postId });
       } else {
         return client.request(POST_DISLIKE_QUERY, { postId });
@@ -36,11 +43,15 @@ function PostActivity({ liked, postId }: { liked: boolean; postId: string }) {
   return (
     <div className="border-gray-200 flex justify-between py-3 px-2 border-t">
       <div className="flex gap-6 ">
-        <StarIcon
-          className=" h-8 hover:scale-110 cursor-pointer transition-all duration-75  ease-in-out"
-          liked={liked}
-          onClick={() => likeMutation.mutate(postId)}
-        />
+        <div className="flex items-center gap-">
+          <StarIcon
+            className=" h-8 hover:scale-110 cursor-pointer transition-all duration-75  ease-in-out"
+            liked={liked}
+            onClick={() => likeMutation.mutate(postId)}
+          />
+          <p>{likeCount}</p>
+        </div>
+
         {/* <Image src={StarIcon} style={{fill:'red'}} alt="star" height={28} className=" hover:scale-110 cursor-pointer transition-all duration-75  ease-in-out text-red-300" /> */}
         <Image
           src={CommentIcon}

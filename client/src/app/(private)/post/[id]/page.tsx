@@ -7,21 +7,28 @@ import PostReply from "@/components/post/post-reply";
 import PostPanel from "@/components/post/post-panel";
 import PostComment from "@/components/post/post-comment";
 import PostCommentFeed from "@/components/post/post-comment-feed";
+import { useQuery } from "@tanstack/react-query";
+import { client } from "@/lib/utils/request";
+import { GET_POST_QUERY } from "@/lib/query/query";
 
 function PostS({ params }: { params: { id: string } }) {
-  const [data, setData] = useState<undefined | any>();
 
   const { id } = params;
+  const {data} = useQuery({
+    queryKey:['posts', id],
+    queryFn:()=>{
+      console.log('id', id);
+      
+      return client.request(GET_POST_QUERY, {postId:id})
+    }
+  }) 
+  
 
-  useEffect(() => {
-    const data = POST_MOCK.find((item) => item.postId == id);
-    console.log(data);
-    setData(data);
-  }, []);
+
   if (!data) return <div>Loading</div>;
   return (
     <div className=" my-3 1050:mx-10  flex flex-col items-center gap-2">
-      <Post data={data}/>
+      <Post data={data.getSinglePost}/>
       <PostReply/>
       <PostCommentFeed/>
     </div>

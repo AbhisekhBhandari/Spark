@@ -46,6 +46,7 @@ type Post {
 
 type Query {
   getPosts: [Post]
+  getSinglePost(postId: String!): Post
 }
 
 """auth details or errors"""
