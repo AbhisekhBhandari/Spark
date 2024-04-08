@@ -38,7 +38,6 @@ type NotUniqueEmailError {
 type Post {
   isLiked: Boolean
   likeCount: Int
-  likes: [Like]!
   postCaption: String
   postId: ID!
   postImage: String
@@ -47,6 +46,7 @@ type Post {
 }
 
 type Query {
+  getPostLikes(postId: String!): [Like]!
   getPosts: [Post]
   getSinglePost(postId: String!): Post
 }

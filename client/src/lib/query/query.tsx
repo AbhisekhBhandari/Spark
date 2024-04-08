@@ -31,3 +31,14 @@ export const GET_POST_QUERY = gql`
     }
   }
 `;
+
+export const GET_POST_LIKES_QUERY = gql`
+  query Query($postId: String!) {
+    getPostLikes(postId: $postId) {
+      likeId
+      profilePicture
+      userId
+      username
+    }
+  }
+`;

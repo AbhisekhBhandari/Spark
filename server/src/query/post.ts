@@ -52,13 +52,7 @@ export const likeCountQuery = (postId: string) => `
 
 SELECT COUNT("likeId") FROM  public."Likes" where "postId" = '${postId}';`;
 
-export const getLikesInfoQuery = (postId: string) => `
-SELECT "likeId", "username", US."userId", "profilePicture" FROM public."Likes" PL  
-LEFT JOIN public."User" US
-ON PL."userId" = US."userId"
-WHERE "postId" = '${postId}'
-;
-`;
+
 
 //   `
 //   SELECT UP."postId", UP."postImage", UP."postCaption", UP."userId", COUNT(PL."likeId"),

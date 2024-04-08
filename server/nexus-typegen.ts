@@ -100,7 +100,6 @@ export interface NexusGenFieldTypes {
   Post: { // field return type
     isLiked: boolean | null; // Boolean
     likeCount: number | null; // Int
-    likes: Array<NexusGenRootTypes['Like'] | null>; // [Like]!
     postCaption: string | null; // String
     postId: string; // ID!
     postImage: string | null; // String
@@ -108,6 +107,7 @@ export interface NexusGenFieldTypes {
     userId: string; // String!
   }
   Query: { // field return type
+    getPostLikes: Array<NexusGenRootTypes['Like'] | null>; // [Like]!
     getPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     getSinglePost: NexusGenRootTypes['Post'] | null; // Post
   }
@@ -151,7 +151,6 @@ export interface NexusGenFieldTypeNames {
   Post: { // field return type name
     isLiked: 'Boolean'
     likeCount: 'Int'
-    likes: 'Like'
     postCaption: 'String'
     postId: 'ID'
     postImage: 'String'
@@ -159,6 +158,7 @@ export interface NexusGenFieldTypeNames {
     userId: 'String'
   }
   Query: { // field return type name
+    getPostLikes: 'Like'
     getPosts: 'Post'
     getSinglePost: 'Post'
   }
@@ -202,6 +202,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    getPostLikes: { // args
+      postId: string; // String!
+    }
     getSinglePost: { // args
       postId: string; // String!
     }

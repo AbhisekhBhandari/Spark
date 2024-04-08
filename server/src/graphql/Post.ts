@@ -13,7 +13,6 @@ import {
   createPostQuery,
   deletePostQuery,
   getAllPostsQuery,
-  getLikesInfoQuery,
   getPostByIdQuery,
   isLikedQuery,
   likeCountQuery,
@@ -55,16 +54,7 @@ export const Post = objectType({
         return res[0].count;
       },
     });
-    t.nonNull.list.field('likes',{
-      type:'Like',
-      async resolve(parent,args, context){
-        const {postId} = parent;
-        const query = getLikesInfoQuery(postId);
-        const likes = await execute(query);
-        console.log('lieks', likes);
-        return likes;
-      }
-    })
+
     // t.field("likes", {
     // })
     t.field("user", {
@@ -158,8 +148,8 @@ export const PostQueries = extendType({
         try {
           const { postId } = args;
           const { userId } = context.user;
-          console.log('postId', postId);
-          
+          console.log("postId", postId);
+
           if (!userId) throw new Error("Unauthenticated");
           const query = getPostByIdQuery(postId);
           const post = await execute(query);

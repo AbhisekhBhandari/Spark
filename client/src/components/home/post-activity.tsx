@@ -11,18 +11,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/utils/request";
 import { POST_DISLIKE_QUERY, POST_LIKE_QUERY } from "@/lib/query/query";
 import LikesDialog from "../post/likes-dialog";
-import { Like } from "@/gql/graphql";
 
 function PostActivity({
   liked,
   postId,
   likeCount,
-  likesList
 }: {
   liked: boolean;
   postId: string;
   likeCount: number;
-  likesList:Like[]
 }) {
   const [openLikesDialog, setOpenLikesDialog] = useState(false);
 
@@ -82,7 +79,7 @@ function PostActivity({
         />
       </div>
       <Save className=" h-8 hover:scale-110 cursor-pointer transition-all duration-75  ease-in-out" />
-      <LikesDialog  open={openLikesDialog} handleClose={handleClose} likesList={likesList}/>
+      <LikesDialog  open={openLikesDialog} handleClose={handleClose} postId={postId}/>
 
     </div>
   );

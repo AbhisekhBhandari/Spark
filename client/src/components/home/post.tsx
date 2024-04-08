@@ -21,7 +21,7 @@ function Post({ data }: { data: PostDataType }) {
         postId={data.postId}
       />
       <PostContent caption={data.postCaption} image={data.postImage} />
-      <PostActivity liked={data.isLiked} postId={data.postId} likeCount= {data.likeCount}  likesList={data.likes}/>
+      <PostActivity liked={data.isLiked} postId={data.postId} likeCount= {data.likeCount}  />
     </div>
   );
 }
