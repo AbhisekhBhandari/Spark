@@ -36,8 +36,8 @@ export const AuthMutation = extendType({
       async resolve(parent, args, context) {
         try {
           const { email, password } = args;
-          console.log('here', email,password);
-          
+          console.log("here", email, password);
+
           // check for existing email
           const emailCheck: NexusGenFieldTypes["User"][] = await execute(
             findUserByEmail(email)
@@ -57,12 +57,15 @@ export const AuthMutation = extendType({
             createUser[0].userId as string,
             createUser[0].email
           );
-        
-          
-          
-          context.res.cookie("token", token, {});
-          console.log('user',createUser, 't', token);
-          
+
+          const date = new Date();
+          date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);
+          context.res.cookie("token", token, {
+            httpOnly: true,
+            expires: date,
+          });
+          console.log("user", createUser, "t", token);
+
           return {
             token: token,
             user: {
@@ -105,9 +108,11 @@ export const AuthMutation = extendType({
               },
             });
           const token = createJWT(user[0].userId as string, user[0].email);
+          const date = new Date();
+          date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);
           context.res.cookie("token", token, {
             httpOnly: true,
-            secure: true,
+            expires: date,
           });
           return {
             token,
@@ -129,12 +134,12 @@ export const AuthMutation = extendType({
       async resolve(parent, args, context) {
         try {
           const { username, dateOfBirth } = args;
-          const {userId} = context.user;
-          if(!userId) throw new Error("Unauthorized Access")
-          console.log('context,', context.user, username, dateOfBirth);
-          const query = dataFill(username,dateOfBirth, userId);
-          const updateData = await execute(query)
-            return updateData[0];
+          const { userId } = context.user;
+          if (!userId) throw new Error("Unauthorized Access");
+          console.log("context,", context.user, username, dateOfBirth);
+          const query = dataFill(username, dateOfBirth, userId);
+          const updateData = await execute(query);
+          return updateData[0];
         } catch (error) {
           throw error;
         }
