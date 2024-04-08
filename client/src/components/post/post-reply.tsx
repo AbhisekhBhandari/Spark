@@ -1,13 +1,14 @@
 import { Avatar, TextareaAutosize } from "@mui/material";
 import React, { useState } from "react";
 import PostPanel from "./post-panel";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/utils/request";
 import { POST_COMMENT_QUERY } from "@/lib/query/query";
 import { useSnackbar } from "@/contexts/Snackbar";
 
 function PostReply({ postId }: { postId: string }) {
   const [comment, setComment] = useState<string>("");
+  const queryClient = useQueryClient();
   const { showSnackbar } = useSnackbar();
   const mutation = useMutation({
     mutationKey: ["commentReply"],
@@ -17,8 +18,10 @@ function PostReply({ postId }: { postId: string }) {
       
       setComment("");
       showSnackbar("Commented Successfully", "success");
+    queryClient.invalidateQueries({queryKey:['comment', postId]})
     },
     onError:(err)=>console.log('err here ', err)
+    
     
   });
 

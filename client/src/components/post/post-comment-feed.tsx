@@ -2,7 +2,7 @@
 
 import React from "react";
 import PostComment from "./post-comment";
-import { useQuery } from "@tanstack/react-query";
+import { Mutation, useMutation, useMutationState, useQuery } from "@tanstack/react-query";
 import { client } from "@/lib/utils/request";
 import { GET_POST_COMMENTS } from "@/lib/query/query";
 import { Comment } from "@/gql/graphql";
@@ -18,7 +18,9 @@ function PostCommentFeed({ postId }: PostCommentFeedProps) {
     enabled: !!postId,
   });
 
-  console.log("cumment", data, postId);
+
+
+  
   if (isPending) return <p>Loading...</p>;
   return (
     <div className="w-full flex flex-col gap-1">

@@ -19,6 +19,7 @@ function Post({ data }: { data: PostDataType }) {
         userId={data.user.userId}
         username={data.user.username}
         postId={data.postId}
+        createdAt = {data.createdAt}
       />
       <PostContent caption={data.postCaption} image={data.postImage} />
       <PostActivity liked={data.isLiked} postId={data.postId} likeCount= {data.likeCount}  />

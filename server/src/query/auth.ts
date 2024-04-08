@@ -1,6 +1,6 @@
-export const signupQuery = (userId: string, email: string, password: string) =>
-  `INSERT INTO public."User"("userId", "username", "email", "isDataFilled", "profilePicture", "password", "dateOfBirth")
-  VALUES ('${userId}', null, '${email}', false, null, '${password}', null) RETURNING *;
+export const signupQuery = (userId: string, email: string, password: string, date:string) =>
+  `INSERT INTO public."User"("userId", "username", "email", "isDataFilled", "profilePicture", "password", "dateOfBirth", "createdAt")
+  VALUES ('${userId}', null, '${email}', false, null, '${password}', null, '${date}') RETURNING *;
 `;
 
 export const findUserByEmail = (email: string) =>

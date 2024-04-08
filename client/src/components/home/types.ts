@@ -7,6 +7,7 @@ export interface PostDataType {
     postCaption: string;
     postId: string;
     postImage: string;
+    createdAt:string
     user: {
         profilePicture: string | null;
         userId: string;

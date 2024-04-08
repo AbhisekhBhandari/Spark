@@ -9,6 +9,7 @@ export const User = objectType({
     t.string("profilePicture");
     t.string("password");
     t.nonNull.boolean('isDataFilled');
-    t.string('dateOfBirth')
+    t.string('dateOfBirth'),
+    t.nonNull.string('createdAt')
   },
 });

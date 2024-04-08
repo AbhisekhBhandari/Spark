@@ -35,6 +35,7 @@ export interface NexusGenObjects {
   Comment: { // root type
     comment: string; // String!
     commentId?: string | null; // ID
+    createdAt: string; // String!
     postId: string; // String!
     profilePicture?: string | null; // String
     userId: string; // String!
@@ -50,6 +51,7 @@ export interface NexusGenObjects {
   Mutation: {};
   NotUniqueEmailError: {};
   Post: { // root type
+    createdAt: string; // String!
     postCaption?: string | null; // String
     postId: string; // ID!
     postImage?: string | null; // String
@@ -57,6 +59,7 @@ export interface NexusGenObjects {
   }
   Query: {};
   User: { // root type
+    createdAt: string; // String!
     dateOfBirth?: string | null; // String
     email: string; // String!
     isDataFilled: boolean; // Boolean!
@@ -87,6 +90,7 @@ export interface NexusGenFieldTypes {
   Comment: { // field return type
     comment: string; // String!
     commentId: string | null; // ID
+    createdAt: string; // String!
     postId: string; // String!
     profilePicture: string | null; // String
     userId: string; // String!
@@ -115,6 +119,7 @@ export interface NexusGenFieldTypes {
     error: string; // String!
   }
   Post: { // field return type
+    createdAt: string; // String!
     isLiked: boolean | null; // Boolean
     likeCount: number | null; // Int
     postCaption: string | null; // String
@@ -130,6 +135,7 @@ export interface NexusGenFieldTypes {
     getSinglePost: NexusGenRootTypes['Post'] | null; // Post
   }
   User: { // field return type
+    createdAt: string; // String!
     dateOfBirth: string | null; // String
     email: string; // String!
     isDataFilled: boolean; // Boolean!
@@ -148,6 +154,7 @@ export interface NexusGenFieldTypeNames {
   Comment: { // field return type name
     comment: 'String'
     commentId: 'ID'
+    createdAt: 'String'
     postId: 'String'
     profilePicture: 'String'
     userId: 'String'
@@ -176,6 +183,7 @@ export interface NexusGenFieldTypeNames {
     error: 'String'
   }
   Post: { // field return type name
+    createdAt: 'String'
     isLiked: 'Boolean'
     likeCount: 'Int'
     postCaption: 'String'
@@ -191,6 +199,7 @@ export interface NexusGenFieldTypeNames {
     getSinglePost: 'Post'
   }
   User: { // field return type name
+    createdAt: 'String'
     dateOfBirth: 'String'
     email: 'String'
     isDataFilled: 'Boolean'

@@ -2,13 +2,14 @@ export const createPostQuery = (
   postId: string,
   userId: string,
   postImage: string | null,
-  postCaption: string | null
+  postCaption: string | null,
+  date: string
 ) => {
   const sqlPostImage = postImage !== null ? `'${postImage}'` : "NULL";
   const sqlPostCaption = postCaption !== null ? `'${postCaption}'` : "NULL";
   return `
-    INSERT INTO public."Post"("postId", "postImage", "postCaption", "userId")
-    VALUES ('${postId}', ${sqlPostImage}, ${sqlPostCaption}, '${userId}')
+    INSERT INTO public."Post"("postId", "postImage", "postCaption", "userId", "createdAt")
+    VALUES ('${postId}', ${sqlPostImage}, ${sqlPostCaption}, '${userId}', '${date}')
     RETURNING *;
   `;
 };
@@ -51,8 +52,6 @@ $$
 export const likeCountQuery = (postId: string) => `
 
 SELECT COUNT("likeId") FROM  public."Likes" where "postId" = '${postId}';`;
-
-
 
 //   `
 //   SELECT UP."postId", UP."postImage", UP."postCaption", UP."userId", COUNT(PL."likeId"),

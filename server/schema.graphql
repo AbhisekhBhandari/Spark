@@ -10,6 +10,7 @@ type AuthPayload {
 type Comment {
   comment: String!
   commentId: ID
+  createdAt: String!
   postId: String!
   profilePicture: String
   userId: String!
@@ -46,6 +47,7 @@ type NotUniqueEmailError {
 }
 
 type Post {
+  createdAt: String!
   isLiked: Boolean
   likeCount: Int
   postCaption: String
@@ -66,6 +68,7 @@ type Query {
 union SignupResponse = AuthPayload | NotUniqueEmailError
 
 type User {
+  createdAt: String!
   dateOfBirth: String
   email: String!
   isDataFilled: Boolean!

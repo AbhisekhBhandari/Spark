@@ -13,7 +13,6 @@ function PostContentWImage({
   image: string | null;
   caption: string | null;
 }) {
-  console.log('i', image);
   
   return (
     <div className="py-2">

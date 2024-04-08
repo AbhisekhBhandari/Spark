@@ -13,6 +13,7 @@ import { dataFill, findUserByEmail, signupQuery } from "../query/auth";
 import { NexusGenFieldTypes } from "../../nexus-typegen";
 import { createJWT } from "../utils/jwt";
 import { GraphQLError } from "graphql";
+import { getCurrentDateTime } from "../utils/date";
 
 export const Auth = objectType({
   name: "AuthPayload",
@@ -51,7 +52,14 @@ export const AuthMutation = extendType({
           }
           const hashedPassword = await bcrypt.hash(password, 10);
           const userId = v4();
-          const query = signupQuery(userId, email, hashedPassword);
+          const currentDateTimeString = getCurrentDateTime();
+
+          const query = signupQuery(
+            userId,
+            email,
+            hashedPassword,
+            currentDateTimeString
+          );
           const createUser: NexusGenFieldTypes["User"][] = await execute(query);
           const token = createJWT(
             createUser[0].userId as string,

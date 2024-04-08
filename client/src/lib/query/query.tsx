@@ -48,6 +48,7 @@ export const GET_POST_COMMENTS = gql`
     getComments(postId: $postId) {
       comment
       commentId
+      createdAt
       profilePicture
       userId
       username

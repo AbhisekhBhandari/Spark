@@ -19,6 +19,7 @@ import {
 } from "../query/post";
 import { findUserById } from "../query/auth";
 import { error, log } from "console";
+import { getCurrentDateTime } from "../utils/date";
 
 export const Post = objectType({
   name: "Post",
@@ -27,6 +28,7 @@ export const Post = objectType({
       t.string("postImage"),
       t.string("postCaption"),
       t.nonNull.string("userId"),
+      t.nonNull.string("createdAt"),
       t.field("isLiked", {
         type: "Boolean",
         async resolve(parent, args, context) {
@@ -89,8 +91,9 @@ export const PostMutations = extendType({
           if (!context.user) throw new Error("Unauthenticated");
           // generate postId
           const postId = v4();
+          const currentDateTime = getCurrentDateTime();
           // create post
-          const postQuery = createPostQuery(postId, userId, postImage, caption);
+          const postQuery = createPostQuery(postId, userId, postImage, caption, currentDateTime);
           const res = await execute(postQuery);
           return res[0];
         } catch (err) {
@@ -110,7 +113,6 @@ export const PostMutations = extendType({
           if (!userId) throw new Error("Not authenticated");
           const query = deletePostQuery(userId, postId);
           const deletePost = await execute(query);
-          console.log("delete result", deletePost);
           return deletePost[0];
         } catch (error) {
           console.log("sere", error);

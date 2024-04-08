@@ -13,6 +13,7 @@ const GET_POSTS_QUERY = gql`
       postId
       postImage
       postCaption
+      createdAt
       user {
         userId
         username
@@ -29,7 +30,6 @@ function PostFeed() {
     queryKey: ["posts"],
     queryFn: () => client.request(GET_POSTS_QUERY),
   });
-  console.log("data", data, error);
 
   if (isPending) return <div>Loadingg...</div>;
   return (
@@ -37,10 +37,7 @@ function PostFeed() {
       {data.getPosts.map((post: PostType, index) => (
         <Post data={post} />
       ))}
-      {/* <Post image='https://wallpapers.com/images/featured/nezuko-3tg32q5lcq0aaljj.webp'/>
-        <Post/>
-        <Post/>
-        <Post/> */}
+
     </div>
   );
 }
