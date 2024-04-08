@@ -24,7 +24,7 @@ function PostCommentFeed({ postId }: PostCommentFeedProps) {
     <div className="w-full flex flex-col gap-1">
       {data.getComments.length > 0 ? (
         data?.getComments.map((comment: Comment) => (
-          <PostComment commentData={comment} key={comment.postId} />
+          <PostComment commentData={comment} key={comment.commentId} />
         ))
       ) : (
         <p>No comments yet.</p>

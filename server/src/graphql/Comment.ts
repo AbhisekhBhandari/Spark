@@ -33,6 +33,8 @@ export const CommentMutations = extendType({
           const commentId = v4();
           const query = addCommentQuery(commentId, postId, userId, comment);
           const addedComment = await execute(query);
+          console.log('addedComment ', addedComment);
+          
           return addedComment[0];
         } catch (error) {
           throw error;
@@ -55,7 +57,6 @@ export const CommentQueries = extendType({
           const { postId } = args;
           const query = getCommentsQuery(postId);
           const comments = await execute(query);
-          console.log('com', comments);
           
           return comments;
         } catch (error) {

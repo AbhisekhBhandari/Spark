@@ -43,16 +43,27 @@ export const GET_POST_LIKES_QUERY = gql`
   }
 `;
 
-
 export const GET_POST_COMMENTS = gql`
-query GetComments($postId: String!) {
-  getComments(postId: $postId) {
-    comment
-    commentId
-    profilePicture
-    userId
-    username
-    postId
+  query GetComments($postId: String!) {
+    getComments(postId: $postId) {
+      comment
+      commentId
+      profilePicture
+      userId
+      username
+      postId
+    }
   }
-}
-`
+`;
+export const POST_COMMENT_QUERY = gql`
+  mutation Mutation($postId: String!, $comment: String!) {
+    addComment(postId: $postId, comment: $comment) {
+      comment
+      commentId
+      postId
+      profilePicture
+      userId
+      username
+    }
+  }
+`;

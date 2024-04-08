@@ -1,8 +1,27 @@
 import { Avatar, TextareaAutosize } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import PostPanel from "./post-panel";
+import { useMutation } from "@tanstack/react-query";
+import { client } from "@/lib/utils/request";
+import { POST_COMMENT_QUERY } from "@/lib/query/query";
+import { useSnackbar } from "@/contexts/Snackbar";
 
-function PostReply() {
+function PostReply({ postId }: { postId: string }) {
+  const [comment, setComment] = useState<string>("");
+  const { showSnackbar } = useSnackbar();
+  const mutation = useMutation({
+    mutationKey: ["commentReply"],
+    mutationFn: () => client.request(POST_COMMENT_QUERY, { postId, comment }),
+    onSuccess: (data) => {
+      console.log('sucesss');
+      
+      setComment("");
+      showSnackbar("Commented Successfully", "success");
+    },
+    onError:(err)=>console.log('err here ', err)
+    
+  });
+
   return (
     <div className="w-full flex border px-3 py-2 rounded-xl  gap-2">
       <Avatar sx={{ height: 45, width: 45 }} />
@@ -12,8 +31,15 @@ function PostReply() {
           className="resize-none  rounded-xl w-full border  px-3 py-2 "
           minRows={1}
           placeholder="Post a reply..."
+          onChange={(e) => setComment(e.target.value)}
+          value={comment}
         />
-        <PostPanel />
+        <PostPanel
+          isReplyNull={comment === "" ? true : false}
+          onSubmitComment={() => {
+            mutation.mutate();
+          }}
+        />
       </div>
     </div>
   );

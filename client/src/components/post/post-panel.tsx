@@ -7,7 +7,12 @@ import ReplyIcon from "@/assets/icons/post-panel/Relpy.svg";
 import Image from "next/image";
 import { Button } from "../ui/Button/Button";
 
-function PostPanel() {
+interface PostPanelProps {
+  isReplyNull: boolean;
+  onSubmitComment: () => void;
+}
+
+function PostPanel({ isReplyNull, onSubmitComment }: PostPanelProps) {
   return (
     <div className="w-full px-2 flex justify-between ">
       <div className="flex gap-5 cursor-pointer">
@@ -18,7 +23,10 @@ function PostPanel() {
 
       <Button
         rounded={"full"}
-        icon={<Image src={ReplyIcon} alt="location"  className="" />}
+        icon={<Image src={ReplyIcon} alt="location" className="" />}
+        disabled={isReplyNull}
+        className="disabled:cursor-not-allowed"
+        onClick={onSubmitComment}
       >
         Reply
       </Button>
