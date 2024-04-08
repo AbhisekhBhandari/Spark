@@ -26,7 +26,7 @@ function PostS({ params }: { params: { id: string } }) {
     <div className=" my-3 1050:mx-10  flex flex-col items-center gap-2">
       <Post data={data.getSinglePost} />
       <PostReply />
-      <PostCommentFeed />
+      <PostCommentFeed postId={id} />
     </div>
   );
 }

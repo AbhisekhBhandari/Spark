@@ -7,6 +7,15 @@ type AuthPayload {
   user: User!
 }
 
+type Comment {
+  comment: String!
+  commentId: ID
+  postId: String!
+  profilePicture: String
+  userId: String!
+  username: String!
+}
+
 type InvalidCredentials {
   error: String!
 }
@@ -22,6 +31,7 @@ type Like {
 union LoginResponse = AuthPayload | InvalidCredentials
 
 type Mutation {
+  addComment(comment: String!, postId: String!): Comment
   createPost(caption: String, postImage: String): Post
   dataFill(dateOfBirth: String!, username: String!): User
   deletePost(postId: String!): String
@@ -46,6 +56,7 @@ type Post {
 }
 
 type Query {
+  getComments(postId: String!): [Comment]!
   getPostLikes(postId: String!): [Like]!
   getPosts: [Post]
   getSinglePost(postId: String!): Post

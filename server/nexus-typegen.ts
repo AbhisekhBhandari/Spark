@@ -32,6 +32,14 @@ export interface NexusGenObjects {
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Comment: { // root type
+    comment: string; // String!
+    commentId?: string | null; // ID
+    postId: string; // String!
+    profilePicture?: string | null; // String
+    userId: string; // String!
+    username: string; // String!
+  }
   InvalidCredentials: {};
   Like: { // root type
     likeId: string; // String!
@@ -76,6 +84,14 @@ export interface NexusGenFieldTypes {
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Comment: { // field return type
+    comment: string; // String!
+    commentId: string | null; // ID
+    postId: string; // String!
+    profilePicture: string | null; // String
+    userId: string; // String!
+    username: string; // String!
+  }
   InvalidCredentials: { // field return type
     error: string; // String!
   }
@@ -86,6 +102,7 @@ export interface NexusGenFieldTypes {
     username: string; // String!
   }
   Mutation: { // field return type
+    addComment: NexusGenRootTypes['Comment'] | null; // Comment
     createPost: NexusGenRootTypes['Post'] | null; // Post
     dataFill: NexusGenRootTypes['User'] | null; // User
     deletePost: string | null; // String
@@ -107,6 +124,7 @@ export interface NexusGenFieldTypes {
     userId: string; // String!
   }
   Query: { // field return type
+    getComments: Array<NexusGenRootTypes['Comment'] | null>; // [Comment]!
     getPostLikes: Array<NexusGenRootTypes['Like'] | null>; // [Like]!
     getPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     getSinglePost: NexusGenRootTypes['Post'] | null; // Post
@@ -127,6 +145,14 @@ export interface NexusGenFieldTypeNames {
     token: 'String'
     user: 'User'
   }
+  Comment: { // field return type name
+    comment: 'String'
+    commentId: 'ID'
+    postId: 'String'
+    profilePicture: 'String'
+    userId: 'String'
+    username: 'String'
+  }
   InvalidCredentials: { // field return type name
     error: 'String'
   }
@@ -137,6 +163,7 @@ export interface NexusGenFieldTypeNames {
     username: 'String'
   }
   Mutation: { // field return type name
+    addComment: 'Comment'
     createPost: 'Post'
     dataFill: 'User'
     deletePost: 'String'
@@ -158,6 +185,7 @@ export interface NexusGenFieldTypeNames {
     userId: 'String'
   }
   Query: { // field return type name
+    getComments: 'Comment'
     getPostLikes: 'Like'
     getPosts: 'Post'
     getSinglePost: 'Post'
@@ -175,6 +203,10 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    addComment: { // args
+      comment: string; // String!
+      postId: string; // String!
+    }
     createPost: { // args
       caption?: string | null; // String
       postImage?: string | null; // String
@@ -202,6 +234,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    getComments: { // args
+      postId: string; // String!
+    }
     getPostLikes: { // args
       postId: string; // String!
     }

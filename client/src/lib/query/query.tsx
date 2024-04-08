@@ -42,3 +42,17 @@ export const GET_POST_LIKES_QUERY = gql`
     }
   }
 `;
+
+
+export const GET_POST_COMMENTS = gql`
+query GetComments($postId: String!) {
+  getComments(postId: $postId) {
+    comment
+    commentId
+    profilePicture
+    userId
+    username
+    postId
+  }
+}
+`

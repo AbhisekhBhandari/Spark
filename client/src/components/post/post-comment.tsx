@@ -1,22 +1,27 @@
 import { Avatar } from "@mui/material";
 import React from "react";
 import StarIcon from "../home/Icons/Star";
-import OptionIcon from '@/assets/icons/post-control/Option.svg'
+import OptionIcon from "@/assets/icons/post-control/Option.svg";
 import Image from "next/image";
+import { Comment } from "@/gql/graphql";
 
-function PostComment() {
+interface PostCommentProps {
+  commentData: Comment;
+}
+
+function PostComment({ commentData }: PostCommentProps) {
+  console.log('commentda', commentData);
+  
   return (
-    <div className="w-full flex gap-2 border px-2 py-3 rounded-xl items-center">
+    <div className="w-full flex gap-2 border px-2 py-3 rounded-xl items-center justify-between">
       <div className="flex gap-2">
-        <Avatar sx={{ height: 42, width: 42 }} />
+        <Avatar
+          sx={{ height: 42, width: 42 }}
+          src={commentData?.profilePicture ?? undefined}
+        />
         <div>
-            <p>Username</p>
-          <p className="text-sm">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore
-            deleniti illum ducimus fuga voluptatibus magni repellat alias
-            blanditiis, omnis facilis minus temporibus sunt laborum enim ratione
-            doloremque nisi nam. At.
-          </p>
+          <p>{commentData?.username}</p>
+          <p className="text-sm">{commentData?.comment}</p>
         </div>
       </div>
       <StarIcon liked={true} />

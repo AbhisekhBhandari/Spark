@@ -4,3 +4,5 @@ export * from './AuthErrors'
 
 export * from './Post';
 export * from './Like'
+
+export * from './Comment'
