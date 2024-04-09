@@ -53,6 +53,11 @@ export const likeCountQuery = (postId: string) => `
 
 SELECT COUNT("likeId") FROM  public."Likes" where "postId" = '${postId}';`;
 
+
+export const getPostByUserId = (userId: string) =>`
+SELECT * FROM public."Post" where "userId" = '${userId}' ORDER BY "createdAt" DESC;
+`
+
 //   `
 //   SELECT UP."postId", UP."postImage", UP."postCaption", UP."userId", COUNT(PL."likeId"),
 //   CASE

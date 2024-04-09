@@ -111,7 +111,6 @@ export interface NexusGenFieldTypes {
     dataFill: NexusGenRootTypes['User'] | null; // User
     deletePost: string | null; // String
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
-    onDislike: string | null; // String
     onLike: string | null; // String
     signup: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
   }
@@ -132,7 +131,9 @@ export interface NexusGenFieldTypes {
     getComments: Array<NexusGenRootTypes['Comment'] | null>; // [Comment]!
     getPostLikes: Array<NexusGenRootTypes['Like'] | null>; // [Like]!
     getPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
+    getPostsByUserId: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     getSinglePost: NexusGenRootTypes['Post'] | null; // Post
+    getUserById: NexusGenRootTypes['User'] | null; // User
   }
   User: { // field return type
     createdAt: string; // String!
@@ -175,7 +176,6 @@ export interface NexusGenFieldTypeNames {
     dataFill: 'User'
     deletePost: 'String'
     login: 'AuthPayload'
-    onDislike: 'String'
     onLike: 'String'
     signup: 'AuthPayload'
   }
@@ -196,7 +196,9 @@ export interface NexusGenFieldTypeNames {
     getComments: 'Comment'
     getPostLikes: 'Like'
     getPosts: 'Post'
+    getPostsByUserId: 'Post'
     getSinglePost: 'Post'
+    getUserById: 'User'
   }
   User: { // field return type name
     createdAt: 'String'
@@ -231,9 +233,6 @@ export interface NexusGenArgTypes {
       email: string; // String!
       password: string; // String!
     }
-    onDislike: { // args
-      postId: string; // String!
-    }
     onLike: { // args
       postId: string; // String!
     }
@@ -249,8 +248,14 @@ export interface NexusGenArgTypes {
     getPostLikes: { // args
       postId: string; // String!
     }
+    getPostsByUserId: { // args
+      userId: string; // String!
+    }
     getSinglePost: { // args
       postId: string; // String!
+    }
+    getUserById: { // args
+      userId: string; // String!
     }
   }
 }

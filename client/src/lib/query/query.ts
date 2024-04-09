@@ -17,7 +17,6 @@ export const GET_POSTS_QUERY = gql`
   }
 `;
 
-
 export const POST_DELETE_QUERY = gql`
   mutation DeletePost($postId: String!) {
     deletePost(postId: $postId)
@@ -29,11 +28,7 @@ export const POST_LIKE_QUERY = gql`
     onLike(postId: $postId)
   }
 `;
-export const POST_DISLIKE_QUERY = gql`
-  mutation OnDislike($postId: String!) {
-    onDislike(postId: $postId)
-  }
-`;
+
 
 export const GET_POST_QUERY = gql`
   query GetSinglePost($postId: String!) {
@@ -46,6 +41,7 @@ export const GET_POST_QUERY = gql`
       user {
         username
         email
+        userId
       }
       isLiked
     }
@@ -85,6 +81,23 @@ export const POST_COMMENT_QUERY = gql`
       profilePicture
       userId
       username
+    }
+  }
+`;
+
+export const GET_USER_POST = gql`
+  query GetPostsByUserId($userId: String!) {
+    getPostsByUserId(userId: $userId) {
+      likeCount
+      postCaption
+      postId
+      postImage
+      createdAt
+      user {
+        username
+        email
+      }
+      isLiked
     }
   }
 `;

@@ -10,12 +10,13 @@ import PostCommentFeed from "@/components/post/post-comment-feed";
 import { useQuery } from "@tanstack/react-query";
 import { client } from "@/lib/utils/request";
 import { GET_POST_QUERY } from "@/lib/query/query";
+import { Post as PostType } from "@/gql/graphql";
 
 function PostS({ params }: { params: { id: string } }) {
   const { id } = params;
   const { data } = useQuery({
     queryKey: ["posts", id],
-    queryFn: () => {
+    queryFn: ():Promise<{getSinglePost: PostType}> => {
       return client.request(GET_POST_QUERY, { postId: id });
     },
     enabled: !!id,

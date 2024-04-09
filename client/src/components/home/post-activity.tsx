@@ -9,7 +9,7 @@ import Save from "./Icons/Save";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/utils/request";
-import { POST_DISLIKE_QUERY, POST_LIKE_QUERY } from "@/lib/query/query";
+import { POST_LIKE_QUERY } from "@/lib/query/query";
 import LikesDialog from "../post/likes-dialog";
 import { useDebounce } from "@/hooks/use-debounce";
 
@@ -33,17 +33,14 @@ function PostActivity({
 
   const likeMutation = useMutation({
     mutationKey: ["like"],
-    mutationFn: ({ liked, postId }: { liked: boolean; postId: string }) => {
-      if (!liked) {
-        return client.request(POST_LIKE_QUERY, { postId });
-      } else {
-        return client.request(POST_DISLIKE_QUERY, { postId });
-      }
-    },
+    mutationFn: () => client.request(POST_LIKE_QUERY, { postId }),
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ["post"] }),
   });
   useEffect(() => {
-    likeMutation.mutate({ liked: debouncedLike, postId });
-    }, [debouncedLike]);
+    console.log("psto like", postId);
+
+    likeMutation.mutate();
+  }, [debouncedLike]);
 
   const queryState = queryClient.getQueryData(["posts"]);
 

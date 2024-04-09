@@ -1,9 +1,17 @@
 export const onLikeQuery = (likeId: string, userId: string, postId: string) => `
-    INSERT INTO public."Likes"("likeId", "postId", "userId") VALUES ('${likeId}', '${postId}', '${userId}')
+DO $$
+BEGIN 
+
+	IF EXISTS(SELECT 1 FROM public."Likes" WHERE "userId" = '${userId}' AND "postId" = '${postId}') THEN
+		DELETE FROM public."Likes" WHERE "userId" = '${userId}' AND "postId" = '${postId}';
+	ELSE
+		INSERT INTO public."Likes"("likeId", "userId", "postId") VALUES ('${likeId}', '${userId}' ,'${postId}');
+	END IF;
+END $$;
 `;
-export const onDislikeQuery = (postId: string, userId: string) => `
-    DELETE FROM public."Likes" WHERE "postId" = '${postId}' AND "userId" = '${userId}'
-`;
+
+// INSERT INTO public."Likes"("likeId", "postId", "userId") VALUES ('${likeId}', '${postId}', '${userId}')
+
 
 export const getPostLikesQuery = (postId: string) => `
 SELECT "likeId", "username", US."userId", "profilePicture" FROM public."Likes" PL  

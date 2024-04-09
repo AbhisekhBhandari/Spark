@@ -12,13 +12,12 @@ function PostFeed() {
     queryFn: (): Promise<{ getPosts: PostType[] }> =>
       client.request(GET_POSTS_QUERY),
   });
-  console.log("data in pist", data);
 
   if (isPending) return <div>Loadingg...</div>;
   return (
     <div className="flex flex-col w-full  items-center gap-2">
       {data?.getPosts?.map((post, index) => (
-        <Post data={post} />
+        <Post data={post}  key={post.postId}/>
       ))}
     </div>
   );

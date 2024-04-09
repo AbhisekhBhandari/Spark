@@ -11,8 +11,7 @@ interface PostCommentProps {
 }
 
 function PostComment({ commentData }: PostCommentProps) {
-  console.log("commentda", commentData);
-  const timeAfterComment = calculateTimeDifference(commentData.createdAt)
+  const timeAfterComment = calculateTimeDifference(commentData.createdAt);
 
   return (
     <div className="w-full flex gap-2 border px-2 py-3 rounded-xl items-center justify-between">

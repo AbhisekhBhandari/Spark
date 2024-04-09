@@ -14,6 +14,7 @@ import {
   deletePostQuery,
   getAllPostsQuery,
   getPostByIdQuery,
+  getPostByUserId,
   isLikedQuery,
   likeCountQuery,
 } from "../query/post";
@@ -93,7 +94,13 @@ export const PostMutations = extendType({
           const postId = v4();
           const currentDateTime = getCurrentDateTime();
           // create post
-          const postQuery = createPostQuery(postId, userId, postImage, caption, currentDateTime);
+          const postQuery = createPostQuery(
+            postId,
+            userId,
+            postImage,
+            caption,
+            currentDateTime
+          );
           const res = await execute(postQuery);
           return res[0];
         } catch (err) {
@@ -159,6 +166,22 @@ export const PostQueries = extendType({
           return post[0];
         } catch (error) {
           throw error;
+        }
+      },
+    });
+    t.list.field("getPostsByUserId", {
+      type: "Post",
+      args: {
+        userId: nonNull(stringArg()),
+      },
+      async resolve(parent, args, context) {
+        try {
+          const { userId } = args;
+          const query = getPostByUserId(userId)
+          const userPosts = await execute(query);
+          return userPosts;
+        } catch (err) {
+          throw err;
         }
       },
     });

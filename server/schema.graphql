@@ -37,7 +37,6 @@ type Mutation {
   dataFill(dateOfBirth: String!, username: String!): User
   deletePost(postId: String!): String
   login(email: String!, password: String!): AuthPayload
-  onDislike(postId: String!): String
   onLike(postId: String!): String
   signup(email: String!, password: String!): AuthPayload
 }
@@ -61,7 +60,9 @@ type Query {
   getComments(postId: String!): [Comment]!
   getPostLikes(postId: String!): [Like]!
   getPosts: [Post]
+  getPostsByUserId(userId: String!): [Post]
   getSinglePost(postId: String!): Post
+  getUserById(userId: String!): User
 }
 
 """auth details or errors"""

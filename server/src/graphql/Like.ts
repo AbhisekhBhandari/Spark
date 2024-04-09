@@ -16,26 +16,7 @@ export const Like = objectType({
 export const LikeMutations = extendType({
   type: "Mutation",
   definition(t) {
-    t.field("onDislike", {
-      type: "String",
-      args: {
-        postId: nonNull(stringArg()),
-      },
-      async resolve(parent, args, context) {
-        try {
-          const { postId } = args;
-          const { userId } = context.user;
-          //   generate a like id
 
-          const disLikeQuery = onDislikeQuery(postId, userId);
-          const res = await execute(disLikeQuery);
-          console.log("onDislike", res);
-          return "disliked";
-        } catch (error) {
-          throw error;
-        }
-      },
-    });
     t.field("onLike", {
       type: "String",
       args: {
@@ -47,7 +28,8 @@ export const LikeMutations = extendType({
           const { userId } = context.user;
           //   generate a like id
           const likeId = v4();
-          console.log("likiee");
+          console.log("likiee",{likeId,userId, postId});
+          
 
           const likeQuery = onLikeQuery(likeId, userId, postId);
           const res = await execute(likeQuery);

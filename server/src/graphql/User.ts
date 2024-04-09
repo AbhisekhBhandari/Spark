@@ -1,4 +1,6 @@
-import { objectType } from "nexus";
+import { extendType, nonNull, objectType, stringArg } from "nexus";
+import { getUserByIdQuery } from "../query/user";
+import { execute } from "../utils/poolDB";
 
 export const User = objectType({
   name: "User",
@@ -13,3 +15,21 @@ export const User = objectType({
     t.nonNull.string('createdAt')
   },
 });
+export const UserQuery  = extendType({
+  type:'Query',
+  definition(t) {
+      t.field("getUserById",{
+        type: User,
+        args:{
+          userId: nonNull(stringArg())
+        },
+        async resolve(parent, args, context){
+          const {userId} = args;
+          const query = getUserByIdQuery(userId);
+          const user = await execute(query);
+          console.log('userById', user);
+          return user[0];
+        }
+      })
+  },
+})
