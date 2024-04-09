@@ -3,25 +3,19 @@ import React from "react";
 import PostHeader from "./post-header";
 import PostContent from "./post-content";
 import PostActivity from "./post-activity";
-import { PostDataType } from "./types";
-// userId: string;
-// username: string;
-// email: string;
-// followed: boolean;
-// caption?: string;
-// photo?:string;
-// postId:string;
-function Post({ data }: { data: PostDataType }) {
+import { Post as PostType } from "@/gql/graphql";
 
+function Post({ data }: { data: PostType }) {
+  
   return (
     <div className="border  px-3  border-gray-200 w-full  rounded-lg overflow-clip">
       <PostHeader
-        userId={data.user.userId}
+        userId={data.user.userId as string}
         username={data.user.username}
         postId={data.postId}
         createdAt = {data.createdAt}
       />
-      <PostContent caption={data.postCaption} image={data.postImage} />
+      <PostContent caption={data?.postCaption} image={data.postImage} />
       <PostActivity liked={data.isLiked} postId={data.postId} likeCount= {data.likeCount}  />
     </div>
   );

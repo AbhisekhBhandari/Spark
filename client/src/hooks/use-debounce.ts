@@ -1,11 +1,17 @@
+import { useEffect, useState } from "react";
 
-import { MutationFunction, MutationKey, useMutation } from '@tanstack/react-query';
-import _ from 'lodash';
 
-export const useDebouncedMutation = (mutationKey:MutationKey, mutationFn:any, delay:number) => {
-  const debouncedQueryFn = _.debounce(mutationFn, delay);
-  return useMutation({
-    mutationKey:mutationKey,
-    mutationFn: debouncedQueryFn
-  });
-};
+export function useDebounce<T>(value:T, delay =500){
+  const [debouncedValue, setDebouncedValue] = useState(value)
+
+  useEffect(()=>{
+    const timeOut = setTimeout(()=>{
+      setDebouncedValue(value)
+    },delay);
+    return ()=>clearTimeout(timeOut);
+
+  },[value,delay])
+ 
+  return debouncedValue;
+
+}

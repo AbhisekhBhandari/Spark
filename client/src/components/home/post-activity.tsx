@@ -11,7 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/utils/request";
 import { POST_DISLIKE_QUERY, POST_LIKE_QUERY } from "@/lib/query/query";
 import LikesDialog from "../post/likes-dialog";
-import { useDebounce, useDebouncedMutation } from "@/hooks/use-debounce";
+import { useDebounce } from "@/hooks/use-debounce";
 
 function PostActivity({
   liked,
@@ -27,40 +27,23 @@ function PostActivity({
     likeCount: likeCount,
     liked: liked,
   });
-
+  const debouncedLike = useDebounce(tempLikeStatus.liked);
   const navigate = useRouter();
   const queryClient = useQueryClient();
 
-  // const likeMutation = useMutation({
-  //   mutationKey: ["like"],
-  // mutationFn: ({ liked, postId }: { liked: boolean; postId: string }) => {
-  //   if (!liked) {
-  //     return client.request(POST_LIKE_QUERY, { postId });
-  //   } else {
-  //     return client.request(POST_DISLIKE_QUERY, { postId });
-  //   }
-  // },
-  // });
-
-  const mutationFn = ({
-    liked,
-    postId,
-  }: {
-    liked: boolean;
-    postId: string;
-  }) => {
-    if (!liked) {
-      return client.request(POST_LIKE_QUERY, { postId });
-    } else {
-      return client.request(POST_DISLIKE_QUERY, { postId });
-    }
-  };
-
-  const debouncedLikeMutation = useDebouncedMutation(
-    ["like"],
-    mutationFn,
-    3000
-  );
+  const likeMutation = useMutation({
+    mutationKey: ["like"],
+    mutationFn: ({ liked, postId }: { liked: boolean; postId: string }) => {
+      if (!liked) {
+        return client.request(POST_LIKE_QUERY, { postId });
+      } else {
+        return client.request(POST_DISLIKE_QUERY, { postId });
+      }
+    },
+  });
+  useEffect(() => {
+    likeMutation.mutate({ liked: debouncedLike, postId });
+    }, [debouncedLike]);
 
   const queryState = queryClient.getQueryData(["posts"]);
 
@@ -74,7 +57,6 @@ function PostActivity({
         likeCount: newLikeCount,
       };
     });
-    debouncedLikeMutation.mutate({ liked: tempLikeStatus.liked, postId }); // Trigger mutation
   };
   const onCommentHandler = () => {
     navigate.push(`/post/${postId}`);

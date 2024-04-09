@@ -60,13 +60,13 @@ export interface NexusGenObjects {
   Query: {};
   User: { // root type
     createdAt: string; // String!
-    dateOfBirth?: string | null; // String
+    dateOfBirth: string; // String!
     email: string; // String!
     isDataFilled: boolean; // Boolean!
-    password?: string | null; // String
+    password: string; // String!
     profilePicture?: string | null; // String
     userId: string; // ID!
-    username?: string | null; // String
+    username: string; // String!
   }
 }
 
@@ -120,12 +120,12 @@ export interface NexusGenFieldTypes {
   }
   Post: { // field return type
     createdAt: string; // String!
-    isLiked: boolean | null; // Boolean
-    likeCount: number | null; // Int
+    isLiked: boolean; // Boolean!
+    likeCount: number; // Int!
     postCaption: string | null; // String
     postId: string; // ID!
     postImage: string | null; // String
-    user: NexusGenRootTypes['User'] | null; // User
+    user: NexusGenRootTypes['User']; // User!
     userId: string; // String!
   }
   Query: { // field return type
@@ -136,13 +136,13 @@ export interface NexusGenFieldTypes {
   }
   User: { // field return type
     createdAt: string; // String!
-    dateOfBirth: string | null; // String
+    dateOfBirth: string; // String!
     email: string; // String!
     isDataFilled: boolean; // Boolean!
-    password: string | null; // String
+    password: string; // String!
     profilePicture: string | null; // String
     userId: string; // ID!
-    username: string | null; // String
+    username: string; // String!
   }
 }
 

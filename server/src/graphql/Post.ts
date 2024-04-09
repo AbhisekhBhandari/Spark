@@ -29,7 +29,7 @@ export const Post = objectType({
       t.string("postCaption"),
       t.nonNull.string("userId"),
       t.nonNull.string("createdAt"),
-      t.field("isLiked", {
+      t.nonNull.field("isLiked", {
         type: "Boolean",
         async resolve(parent, args, context) {
           try {
@@ -45,7 +45,7 @@ export const Post = objectType({
           }
         },
       });
-    t.field("likeCount", {
+    t.nonNull.field("likeCount", {
       type: "Int",
       async resolve(parent, args, context) {
         const { postId } = parent;
@@ -59,7 +59,7 @@ export const Post = objectType({
 
     // t.field("likes", {
     // })
-    t.field("user", {
+    t.nonNull.field("user", {
       type: "User",
       async resolve(parent, args, context) {
         try {

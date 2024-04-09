@@ -48,12 +48,12 @@ type NotUniqueEmailError {
 
 type Post {
   createdAt: String!
-  isLiked: Boolean
-  likeCount: Int
+  isLiked: Boolean!
+  likeCount: Int!
   postCaption: String
   postId: ID!
   postImage: String
-  user: User
+  user: User!
   userId: String!
 }
 
@@ -69,11 +69,11 @@ union SignupResponse = AuthPayload | NotUniqueEmailError
 
 type User {
   createdAt: String!
-  dateOfBirth: String
+  dateOfBirth: String!
   email: String!
   isDataFilled: Boolean!
-  password: String
+  password: String!
   profilePicture: String
   userId: ID!
-  username: String
+  username: String!
 }

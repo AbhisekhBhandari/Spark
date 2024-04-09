@@ -10,19 +10,18 @@ function PostContentWImage({
   image,
   caption = "",
 }: {
-  image: string | null;
-  caption: string | null;
+  image: string | undefined | null;
+  caption: string | undefined | null;
 }) {
-  
   return (
     <div className="py-2">
       {caption && (
-        <div className="mb-3 text-sm border-b">
+        <div className="mb-3 text-sm">
           <ShowMoreText>{caption}</ShowMoreText>
         </div>
       )}
-      {image !== "null" && ( 
-        <div className={`h-[400px] ${image !==null ? "flex" : "hidden"}`}>
+      {image && (
+        <div className={`h-[400px] ${image !== null ? "flex" : "hidden"}`}>
           <img src={image} className="w-full h-full object-contain" />
         </div>
       )}
@@ -31,26 +30,3 @@ function PostContentWImage({
 }
 
 export default PostContentWImage;
-
-// function PostContentWImage({
-//   image,
-//   caption = "",
-// }: {
-//   image: string | null;
-//   caption: string | null;
-// }) {
-//   return (
-//     <div className="py-2">
-//       {caption && (
-//         <div className="mb-3 text-sm border-b">
-//           <ShowMoreText>{caption}</ShowMoreText>
-//         </div>
-//       )}
-//       {image && (
-//         <div className="h-[400px]">
-//           <img src={image} className=" w-full h-full object-contain" />
-//         </div>
-//       )}
-//     </div>
-//   );
-// }

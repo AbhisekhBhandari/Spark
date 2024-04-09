@@ -24,7 +24,7 @@ function PostS({ params }: { params: { id: string } }) {
   if (!data) return <div>Loading</div>;
   return (
     <div className=" my-3 1050:mx-10  flex flex-col items-center gap-2">
-      <Post data={data.getSinglePost} />
+      <Post data={data.getSinglePost} key={id} />
       <PostReply postId={id}/>
       <PostCommentFeed postId={id} />
     </div>

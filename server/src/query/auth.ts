@@ -1,6 +1,6 @@
 export const signupQuery = (userId: string, email: string, password: string, date:string) =>
   `INSERT INTO public."User"("userId", "username", "email", "isDataFilled", "profilePicture", "password", "dateOfBirth", "createdAt")
-  VALUES ('${userId}', null, '${email}', false, null, '${password}', null, '${date}') RETURNING *;
+  VALUES ('${userId}', '', '${email}', false, null, '${password}', null, '${date}') RETURNING *;
 `;
 
 export const findUserByEmail = (email: string) =>

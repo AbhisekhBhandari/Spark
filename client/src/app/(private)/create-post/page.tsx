@@ -111,7 +111,7 @@ const CreatePost = () => {
     },
     onError: (error) => {
       console.log("error of post ", error);
-      showSnackbar("Creating Post Failed", "error"); 
+      showSnackbar("Creating Post Failed", "error");
     },
   });
 

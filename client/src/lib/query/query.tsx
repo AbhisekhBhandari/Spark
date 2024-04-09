@@ -1,4 +1,23 @@
 import { gql } from "graphql-request";
+export const GET_POSTS_QUERY = gql`
+  query GetPostsQuery {
+    getPosts {
+      postId
+      postImage
+      postCaption
+      createdAt
+      user {
+        userId
+        username
+        profilePicture
+      }
+      isLiked
+      likeCount
+    }
+  }
+`;
+
+
 export const POST_DELETE_QUERY = gql`
   mutation DeletePost($postId: String!) {
     deletePost(postId: $postId)
@@ -23,6 +42,7 @@ export const GET_POST_QUERY = gql`
       postCaption
       postId
       postImage
+      createdAt
       user {
         username
         email
@@ -33,7 +53,7 @@ export const GET_POST_QUERY = gql`
 `;
 
 export const GET_POST_LIKES_QUERY = gql`
-  query Query($postId: String!) {
+  query GetPostLikes($postId: String!) {
     getPostLikes(postId: $postId) {
       likeId
       profilePicture
@@ -44,7 +64,7 @@ export const GET_POST_LIKES_QUERY = gql`
 `;
 
 export const GET_POST_COMMENTS = gql`
-  query GetComments($postId: String!) {
+  query GetPostComments($postId: String!) {
     getComments(postId: $postId) {
       comment
       commentId
@@ -57,7 +77,7 @@ export const GET_POST_COMMENTS = gql`
   }
 `;
 export const POST_COMMENT_QUERY = gql`
-  mutation Mutation($postId: String!, $comment: String!) {
+  mutation PostComment($postId: String!, $comment: String!) {
     addComment(postId: $postId, comment: $comment) {
       comment
       commentId
